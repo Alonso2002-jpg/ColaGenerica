@@ -2,6 +2,7 @@ package org.ejemplo.Repository;
 
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -133,14 +134,17 @@ public class ColaEjecucionImpl<T> implements ColaEjecucion<T>{
         }
     }
     @Override
-    public List<T> sort(Function<T,Boolean> function){
-        List<T> result=new ArrayList<T>();
-        for (T object :cola) {
-            if (function.apply(object)){
+    public List<T> sort(BiFunction<T,T, Boolean> function){
+        List<T> result= (List<T>) cola.clone();
 
+        for (int i = 0; i < result.size(); i++) {
+            for (int j = 0; j < result.size()-i-1; j++) {
+               if (!function.apply(result.get(j),result.get(j+1))) {
+                   T t =result.remove(j);
+                   result.add(j+1,t);
+               }
             }
         }
-
         return result;
     }
 

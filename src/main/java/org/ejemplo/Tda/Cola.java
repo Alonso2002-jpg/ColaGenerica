@@ -2,6 +2,7 @@ package org.ejemplo.Tda;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public interface Cola<T> {
@@ -38,5 +39,5 @@ public interface Cola<T> {
 
     void  forEach(Function<T,Void> function);
 
-    List<T> sort(Function<T,Boolean> function);
+    List<T> sort(BiFunction<T,T, Boolean> function);
 }

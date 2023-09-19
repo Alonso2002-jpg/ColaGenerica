@@ -41,10 +41,10 @@ public class Main {
 
         System.out.println("Uso de ForEach : ");
          colaStrings.forEach(x -> {
-            System.out.println(x);
+            System.out.println("Imprimo : "+x);
             return null;});
 
-         var res7 = colaStrings.sort(x -> x.length() > 0);
+         var res7 = colaStrings.sort((x,y) -> x.length() > y.length());
          System.out.println("Uso de sort : " + res7);
     }
     
@@ -81,8 +81,8 @@ public class Main {
             x++;
             return null;});
 
-         //var res7 = colaInteger.sort(x -> x.length() > 0);
-         //System.out.println("Uso de sort : " + res7);
+         var res7 = colaInteger.sort((x,y) -> x > y);
+         System.out.println("Uso de sort : " + res7);
     }
 
     public void colaProceso(){
@@ -115,13 +115,16 @@ public class Main {
 
         System.out.println("Uso de ForEach : ");
          colaProcesos.forEach(x -> {
-            System.out.println(x);
+            System.out.println("Imprimo : "+x);
             return null;});
 
-         //var res7 = colaProcesos.sort(x -> x.length() > 0);
-         //System.out.println("Uso de sort : " + res7);
+         var res7 = colaProcesos.sort((x,y) -> x.getPriority() > y.getPriority());
+         System.out.println("Uso de sort : " + res7);
     }
     public static void main(String[] args) {
-
+        Main m = new Main();
+        m.colaString();
+        //m.colaInteger();
+        //m.colaProceso();
     }
 }

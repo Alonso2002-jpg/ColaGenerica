@@ -1,15 +1,23 @@
 import org.ejemplo.Repository.ColaEjecucionImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 public class ColaTest {
 
+    ColaEjecucionImpl<Integer> cola=new ColaEjecucionImpl<>();
+     @BeforeEach
+    public void setUp() {
+        cola = new ColaEjecucionImpl<>();
+    }
+
     @Test
     public void testEncolar(){
-        ColaEjecucionImpl<Integer> cola=new ColaEjecucionImpl<>();
         cola.encolar(4);
         assertAll(
                 ()->assertEquals(1, cola.size()),
@@ -19,19 +27,17 @@ public class ColaTest {
 
     @Test
     public void testDesencolar(){
-        ColaEjecucionImpl<Integer> cola=new ColaEjecucionImpl<>();
         int encolado=4;
         cola.encolar(encolado);
         Optional<Integer> desencolado = cola.desencolar();
         assertAll(
-                ()->assertEquals(encolado,desencolado),
+                ()->assertEquals(encolado,desencolado.get()),
                 ()->assertTrue(desencolado.isPresent())
         );
     }
 
     @Test
     public void testFrente() {
-        ColaEjecucionImpl<Integer> cola=new ColaEjecucionImpl<>();
         cola.encolar(5);
         cola.encolar(10);
         Optional<Integer> first = cola.first();
@@ -43,7 +49,6 @@ public class ColaTest {
 
     @Test
     public void testFrenteConColaVacia() {
-        ColaEjecucionImpl<Integer> cola=new ColaEjecucionImpl<>();
         Optional<Integer> first = cola.first();
         assertAll(
                 () -> assertFalse(first.isPresent())
@@ -52,8 +57,6 @@ public class ColaTest {
 
     @Test
     public void testEsVacia() {
-        ColaEjecucionImpl<Integer> cola=new ColaEjecucionImpl<>();
-
         assertAll(
                 () -> assertTrue(cola.isEmpty()),
                 () -> {
@@ -65,8 +68,6 @@ public class ColaTest {
 
     @Test
     public void testSize() {
-        ColaEjecucionImpl<Integer> cola=new ColaEjecucionImpl<>();
-
         assertAll(
                 () -> assertEquals(0, cola.size()),
                 () -> {
@@ -78,7 +79,6 @@ public class ColaTest {
 
     @Test
     public void testVaciar() {
-        ColaEjecucionImpl<Integer> cola=new ColaEjecucionImpl<>();
         assertAll(
                 () -> {
                     cola.encolar(5);
@@ -93,14 +93,111 @@ public class ColaTest {
 
     @Test
     public void testFilter(){
-        ColaEjecucionImpl<Integer> cola=new ColaEjecucionImpl<>();
         cola.encolar(4);
         cola.encolar(6);
         List<Integer> col = cola.filter(x -> x >=5);
         assertAll(
-                () -> assertEquals(4,col.get(0)),
-                () -> assertEquals(6,col.get(0))
+                () -> assertEquals(6,col.get(0)),
+                () -> assertFalse(col.contains(4))
         );
     }
 
+    @Test
+    public void testMap(){
+        cola.encolar(10);
+        cola.encolar(15);
+
+        List<Integer> col = cola.map(x -> x * 10);
+        assertAll(
+                () -> assertEquals(10*10,col.get(0)),
+                () -> assertEquals(15*10,col.get(1))
+        );
+    }
+
+    @Test
+    public void testFind(){
+    cola.encolar(10);
+    cola.encolar(15);
+    cola.encolar(24);
+
+    var val = cola.find(x -> x>10);
+
+        assertAll(
+                () -> assertEquals(15,val.get()),
+                () -> assertNotEquals(24,val.get())
+        );
+    }
+
+    @Test
+    public void testFindIndex(){
+    cola.encolar(10);
+    cola.encolar(15);
+    cola.encolar(24);
+
+    var val = cola.findIndex(x -> x>10);
+
+        assertAll(
+                () -> assertEquals(1,val),
+                () -> assertNotEquals(3,val)
+        );
+    }
+
+    @Test
+    public void testFindLast(){
+    cola.encolar(10);
+    cola.encolar(15);
+    cola.encolar(24);
+
+    var val = cola.findLast(x -> x>10);
+
+        assertAll(
+                () -> assertEquals(24,val.get()),
+                () -> assertNotEquals(15,val.get())
+        );
+    }
+
+    @Test
+    public void testFindLastIndex(){
+    cola.encolar(10);
+    cola.encolar(15);
+    cola.encolar(24);
+
+    var val = cola.findLastIndex(x -> x>10);
+
+        assertAll(
+                () -> assertEquals(2,val),
+                () -> assertNotEquals(1,val)
+        );
+    }
+
+    @Test
+    public void testForEach(){
+         cola.encolar(10);
+         cola.encolar(15);
+         List<Integer> cola2=new ArrayList<>();
+         cola.forEach(x -> {
+            cola2.add(x);
+             return null;
+         });
+         assertAll(
+                () -> assertEquals(10,cola2.get(0)),
+                () -> assertEquals(15,cola2.get(1))
+        );
+    }
+
+    @Test
+    public void testSort(){
+         cola.encolar(10);
+         cola.encolar(40);
+         cola.encolar(5);
+         cola.encolar(24);
+         cola.encolar(2);
+
+        List<Integer> cola2= cola.getCola();
+        Collections.sort(cola2);
+
+        List<Integer> cola3= cola.sort((x,y) -> x < y);
+
+        assertEquals(cola2,cola3);
+    }
 }
