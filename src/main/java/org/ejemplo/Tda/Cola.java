@@ -14,7 +14,7 @@ public interface Cola<T> {
     Optional<T> first();
 
 
-    boolean esVacia();
+    boolean isEmpty();
 
 
     int size();

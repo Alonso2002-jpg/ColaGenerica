@@ -4,11 +4,12 @@ package org.ejemplo.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class ColaEjecucionImpl<T> implements ColaEjecucion<T>{
 
-    ArrayList<T> cola;
+    private final ArrayList<T> cola;
 
     public ColaEjecucionImpl() {
         cola = new ArrayList<T>();
@@ -42,7 +43,7 @@ public class ColaEjecucionImpl<T> implements ColaEjecucion<T>{
     }
 
     @Override
-    public boolean esVacia() {
+    public boolean isEmpty() {
         return cola.isEmpty();
     }
 
@@ -71,6 +72,7 @@ public class ColaEjecucionImpl<T> implements ColaEjecucion<T>{
         }
         return result;
     }
+
     @Override
     public List<T> map(Function<T, T> function) {
         List<T> result = new ArrayList<T>();
@@ -79,6 +81,7 @@ public class ColaEjecucionImpl<T> implements ColaEjecucion<T>{
         }
         return result;
     }
+
     @Override
     public Optional find(Function<T, Boolean> function){
         for (T object:cola) {
@@ -88,6 +91,7 @@ public class ColaEjecucionImpl<T> implements ColaEjecucion<T>{
         }
         return Optional.empty();
     }
+
     @Override
     public Integer findIndex(Function<T,Boolean> function){
         int index = 0;
@@ -99,6 +103,7 @@ public class ColaEjecucionImpl<T> implements ColaEjecucion<T>{
         }
         return -1;
     }
+
     @Override
     public Optional findLast(Function<T,Boolean> function){
         for(int i=cola.size()-1; i > 0 ;i--){
@@ -109,6 +114,7 @@ public class ColaEjecucionImpl<T> implements ColaEjecucion<T>{
         }
         return Optional.empty();
     }
+
     @Override
     public Integer findLastIndex(Function<T,Boolean> function){
          for(int i=cola.size()-1; i > 0 ;i--){
@@ -119,8 +125,9 @@ public class ColaEjecucionImpl<T> implements ColaEjecucion<T>{
         }
         return -1;
     }
+
     @Override
-    public void  forEach(Function<T,Void> function){
+    public void forEach(Function<T,Void> function){
         for(T object :cola){
             function.apply(object);
         }
@@ -128,12 +135,16 @@ public class ColaEjecucionImpl<T> implements ColaEjecucion<T>{
     @Override
     public List<T> sort(Function<T,Boolean> function){
         List<T> result=new ArrayList<T>();
-        for(T object : cola){
+        for (T object :cola) {
             if (function.apply(object)){
-                result.add(object);
+
             }
         }
 
         return result;
+    }
+
+    public ArrayList<T> getCola() {
+        return cola;
     }
 }
