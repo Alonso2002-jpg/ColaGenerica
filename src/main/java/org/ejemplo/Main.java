@@ -20,7 +20,7 @@ public class Main {
 
 
         List<String> res = colaStrings.filter( x ->  x.length() > 5);
-        System.out.print("Uso de Filter : ");
+        System.out.println("Uso de Filter : ");
         res.forEach(System.out::println);
 
         List<String> res2 = colaStrings.map( x -> x.concat("!"));
@@ -42,9 +42,10 @@ public class Main {
         System.out.println("Uso de ForEach : ");
          colaStrings.forEach(x -> {
             System.out.println("Imprimo : "+x);
-            return null;});
+            return null;
+         });
 
-         var res7 = colaStrings.sort((x,y) -> x.length() > y.length());
+         var res7 = colaStrings.sort((x,y) -> x.length() < y.length());
          System.out.println("Uso de sort : " + res7);
     }
     
@@ -57,31 +58,31 @@ public class Main {
         colaInteger.encolar(32);
 
         List<Integer> res = colaInteger.filter( x ->  x > 10);
-        System.out.print("Uso de Filter : ");
+        System.out.println("Uso de Filter : ");
         res.forEach(System.out::println);
 
         List<Integer> res2 = colaInteger.map( x -> x * 10);
-        System.out.print("Uso de Map : ");
+        System.out.println("Uso de Map : ");
         res2.forEach(System.out::println);
 
-        var res3 = colaInteger.find(x -> x > 10 && x < 50);
+        var res3 = colaInteger.find(x -> x < 10);
         System.out.println("Uso de Find : " + res3.get());
 
-        var res4 = colaInteger.findIndex(x -> x > 10 && x < 50);
+        var res4 = colaInteger.findIndex(x -> x < 10);
         System.out.println("Uso de FindIndex : " + res4);
 
-        var res5 = colaInteger.findLast( x -> x > 10 && x < 50);
+        var res5 = colaInteger.findLast( x -> x < 10);
         System.out.println("Uso de FindLast : " + res5.get());
 
-        var res6 = colaInteger.findLastIndex(x -> x > 10 && x < 50);
+        var res6 = colaInteger.findLastIndex(x -> x < 10);
         System.out.println("Uso de FindLastIndex : " + res6);
 
         System.out.println("Uso de ForEach : ");
          colaInteger.forEach(x -> {
-            x++;
+             System.out.println(Math.pow(x,2));
             return null;});
 
-         var res7 = colaInteger.sort((x,y) -> x > y);
+         var res7 = colaInteger.sort((x,y) -> x < y);
          System.out.println("Uso de sort : " + res7);
     }
 
@@ -94,12 +95,12 @@ public class Main {
         colaProcesos.encolar(new Proceso("P5",24,8));
 
         List<Proceso> res = colaProcesos.filter( x ->  x.getPriority() >= 5);
-        System.out.print("Uso de Filter : ");
-        res.forEach(System.out::println);
+        System.out.println("Uso de Filter : ");
+        res.forEach(x -> System.out.println(x.getName() + " - " + x.getPriority()));
 
         List<Proceso> res2 = colaProcesos.map( x -> x);
-        System.out.print("Uso de Map : ");
-        res2.forEach(System.out::println);
+        System.out.println("Uso de Map : ");
+        res2.forEach(x -> System.out.println(x.getName() + " " + x.getPriority()));
 
         var res3 = colaProcesos.find(x -> x.getPriority() <= 5);
         System.out.println("Uso de Find : " + res3.get());
@@ -115,16 +116,18 @@ public class Main {
 
         System.out.println("Uso de ForEach : ");
          colaProcesos.forEach(x -> {
-            System.out.println("Imprimo : "+x);
+            System.out.println("Imprimo : "+ x.getName() + " " + x.getPriority());
             return null;});
 
-         var res7 = colaProcesos.sort((x,y) -> x.getPriority() > y.getPriority());
-         System.out.println("Uso de sort : " + res7);
+         List<Proceso> res7 = colaProcesos.sort((x, y) -> x.getPriority() < y.getPriority());
+         System.out.println("Uso de sort : ");
+         res7.forEach(x -> System.out.println(x.getName() + " - " + x.getPriority()));
     }
     public static void main(String[] args) {
         Main m = new Main();
-        m.colaString();
+
+        //m.colaString();
         //m.colaInteger();
-        //m.colaProceso();
+        m.colaProceso();
     }
 }

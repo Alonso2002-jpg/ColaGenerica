@@ -65,7 +65,7 @@ public class ColaEjecucionImpl<T> implements ColaEjecucion<T>{
 
     @Override
     public List<T> filter(Function <T, Boolean> function){
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
         for (T object:cola) {
             if (function.apply(object)){
                 result.add(object);
@@ -96,6 +96,7 @@ public class ColaEjecucionImpl<T> implements ColaEjecucion<T>{
     @Override
     public Integer findIndex(Function<T,Boolean> function){
         int index = 0;
+
         for (T object:cola) {
             if (function.apply(object)){
                 return index;
@@ -107,12 +108,14 @@ public class ColaEjecucionImpl<T> implements ColaEjecucion<T>{
 
     @Override
     public Optional findLast(Function<T,Boolean> function){
-        for(int i=cola.size()-1; i > 0 ;i--){
+
+        for(int i = cola.size()-1; i > 0 ;i--){
             var object = cola.get(i);
             if (function.apply(object)){
                 return Optional.of(object);
             }
         }
+
         return Optional.empty();
     }
 

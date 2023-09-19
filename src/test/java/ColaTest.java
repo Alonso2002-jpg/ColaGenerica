@@ -138,7 +138,7 @@ public class ColaTest {
 
         assertAll(
                 () -> assertEquals(1,val),
-                () -> assertNotEquals(3,val)
+                () -> assertNotEquals(2,val)
         );
     }
 
@@ -179,9 +179,12 @@ public class ColaTest {
             cola2.add(x);
              return null;
          });
+
          assertAll(
                 () -> assertEquals(10,cola2.get(0)),
-                () -> assertEquals(15,cola2.get(1))
+                () -> assertEquals(15,cola2.get(1)),
+                () -> assertFalse(cola2.isEmpty()),
+                 () -> assertTrue(cola.size() == cola2.size())
         );
     }
 
@@ -193,7 +196,7 @@ public class ColaTest {
          cola.encolar(24);
          cola.encolar(2);
 
-        List<Integer> cola2= cola.getCola();
+        List<Integer> cola2= (List<Integer>)cola.getCola().clone();
         Collections.sort(cola2);
 
         List<Integer> cola3= cola.sort((x,y) -> x < y);
